@@ -1,14 +1,13 @@
-// Описаний в документації
+
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
-// Variables
 let userSelectedDate = null;
 let countdownInterval = null;
 
-// DOM elements
+
 const datetimePicker = document.getElementById('datetime-picker');
 const startButton = document.querySelector('[data-start]');
 const daysElement = document.querySelector('[data-days]');
@@ -16,7 +15,7 @@ const hoursElement = document.querySelector('[data-hours]');
 const minutesElement = document.querySelector('[data-minutes]');
 const secondsElement = document.querySelector('[data-seconds]');
 
-// Initialize flatpickr
+// flatpickr
 const options = {
     enableTime: true,
     time_24hr: true,
@@ -46,7 +45,6 @@ const options = {
 
 flatpickr(datetimePicker, options);
 
-// Convert milliseconds to time components
 function convertMs(ms) {
     const second = 1000;
     const minute = second * 60;
@@ -61,12 +59,10 @@ function convertMs(ms) {
     return { days, hours, minutes, seconds };
 }
 
-// Add leading zero to single digit numbers
 function addLeadingZero(value) {
     return String(value).padStart(2, '0');
 }
 
-// Update timer display
 function updateTimerDisplay(timeLeft) {
     const { days, hours, minutes, seconds } = convertMs(timeLeft);
 
@@ -76,11 +72,9 @@ function updateTimerDisplay(timeLeft) {
     secondsElement.textContent = addLeadingZero(seconds);
 }
 
-// Start countdown
 function startCountdown() {
     if (!userSelectedDate) return;
 
-    // Disable controls
     startButton.disabled = true;
     datetimePicker.disabled = true;
     datetimePicker.classList.add('timer-running');
@@ -92,11 +86,9 @@ function startCountdown() {
         const timeLeft = targetTime - now;
 
         if (timeLeft <= 0) {
-            // Timer finished
             clearInterval(countdownInterval);
             updateTimerDisplay(0);
 
-            // Re-enable date picker
             datetimePicker.disabled = false;
             return;
         }
@@ -105,8 +97,6 @@ function startCountdown() {
     }, 1000);
 }
 
-// Event listeners
 startButton.addEventListener('click', startCountdown);
 
-// Initialize display
 updateTimerDisplay(0);
