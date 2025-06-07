@@ -53,5 +53,3 @@ function handlFunction(event) {
 function inputFunction() {
     localStorage.setItem('key', input.value)
 }
-
-console.log(form.children)
